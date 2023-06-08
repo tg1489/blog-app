@@ -1,0 +1,66 @@
+{{!-- Navbar --}}
+<nav class="navbar navbar-expand-lg">
+    <a id="title" class="navbar-brand" href="/">Blog App</a>
+    <button class="navbar-toggler" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" 
+            aria-expanded="false" 
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+{{!-- Navbar List Items --}}
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">{{ username }} + username</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a id="dashboard" class="nav-link" href="/dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a id="login-start" class="nav-link" href="/login">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+{{!-- Existing Blogs --}}
+<div class="container existing-blogs">
+    <div class="row">
+        <div class="col d-flex justify-content-center align-items-center mt-3">
+            <p>Existing Blogs Shown Here</p>
+        </div>
+        {{!-- Login Message --}}
+        <div class="col login-message d-flex justify-content-center align-items-center mt-3">
+            <h2 class="login-alert">Please login or create and account.</h2>
+        </div>
+    </div>
+</div>
+
+
+{{!-- LOGIN Process --}}
+
+<div class="container login">
+    <div class="row d-flex justify-content-center align-items-center flex-column login-row">
+        <div class="col mb-5 mt-2"><h1>Login</h1></div>
+        <form id="login-form">
+            Username:
+            <div class="col"><input id="login-username" class="mb-4" type="text"></div>
+            Password:
+            <div class="col d-flex"><input id="login-password" class="mb-3" type="password"></div>
+            <button id="login-button">Login</button>
+        </form>
+        <br>
+        <center>
+<span id="signup-alert">Don't have an account?</span> <a id="signup" href="/register">Sign up here</a>
+</center>
+    </div>
+</div>
+
+

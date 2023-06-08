@@ -1,0 +1,49 @@
+.login {
+    display: none;
+    position: relative;
+    float: center;
+    border: 2px #FFF solid;
+    width: 25vw;
+    height: 50vh;
+    border-radius: 5px;
+}
+
+#signup-alert { 
+    color: rgb(121, 76, 245);
+}
+
+a#signup {
+    text-decoration: none;
+    color: #FFF;
+}
+
+.login-show {
+    /* Login for error page: */
+    display: block;
+    position: relative;
+    float: center;
+    border: 2px #FFF solid;
+    width: 25vw;
+    height: 50vh;
+    border-radius: 5px;
+
+}
+
+
+
+a:hover {
+    cursor: pointer;
+}
+
+.login-message {
+    display: none;
+  }
+
+#login-form {
+    color: rgb(121, 76, 245);
+}
+
+#login-button {
+    background-color: rgb(121, 76, 245);
+    width: 10rem;
+}

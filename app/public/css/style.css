@@ -1,0 +1,59 @@
+html, body {
+    background-color: rgb(32, 32, 32);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+h2.login-alert {
+    color: #FFF;
+}
+
+p {
+    padding: 4rem;
+    color:  rgb(121, 76, 245);
+}
+
+nav {
+    background-color: rgb(121, 76, 245);
+}
+
+
+a {
+    margin-right: 1rem;
+    /* background-color: rgb(121, 76, 245); */
+}
+
+a#title {
+    color: #FFF;
+    margin-left: 1rem;
+    background-color: rgb(121, 76, 245);
+}
+
+a.nav-link {
+    color: #FFF;
+    background-color: rgb(121, 76, 245);
+}
+
+button {
+    margin-right: 1rem;
+}
+
+li.nav-item {
+    background-color: rgb(121, 76, 245);
+}
+
+#navbarNav {
+    background-color: rgb(121, 76, 245);
+}
+
+div.existing-blogs {
+    /* border: 1px #000 solid; */
+}
+
+div.login-message {
+    /* border: 1px #000 solid; */
+}
