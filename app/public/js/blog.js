@@ -18,7 +18,7 @@ $(() => {
             },
             success: function (response) {
                 if (response.success)
-                {window.location.assign('/home')}
+                {window.location.assign('/dashboard')}
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log("AJAX request failed: " + textStatus + ", " + errorThrown);

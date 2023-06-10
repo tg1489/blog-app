@@ -6,46 +6,63 @@ const Comment = require('../models/Comment');
 exports.home = async (req, res) => {
   try {
     const authorizedAccess = req.session.logged_in;
-      if (!authorizedAccess) {res.render('guest');}
-      else {
+    if (!authorizedAccess) {
+      res.render('guest');
+    } else {
+      const users = await User.findAll({attributes: ['username', 'dateComment'],});
+      const blogs = await Blog.findAll({attributes: ['title', 'paragraph', 'date']});
+      const comments = await Comment.findAll({attributes: ['comment']});
 
-        const user = await User.findByPk(req.session.user_id); // user primary key
-        const blogs = await Blog.findAll({
-          attributes: ['id', 'title', 'date', 'paragraph', 'comment_id'],
-        })
-        const comments = await Comment.findAll({
-          attributes: ['id', 'comment', 'user_id', 'blog_id'],
-        })
-        
-        const serializedBlogs = blogs.map(blog => blog.get({ plain: true }));
-        const serializedUser = user.get({ plain: true });
-        const serializedComments = comments.map(comment => comment.get({ plain: true }));
-        
-        res.status(200).render('homeId', { 
-          layout: 'home', 
-          user: authorizedAccess, 
-          username: req.session.username, 
-          serializedBlogs,
-          serializedUser,
-          serializedComments,
-          });
-      }
-  }
-  
-  catch (err) {
+      const serializedUsers = users.map(user => user.get({ plain: true }));
+      const serializedBlogs = blogs.map(blog => blog.get({ plain: true }));
+      const serializedComments = comments.map(comment => comment.get({ plain: true }));
+
+      console.log(serializedUsers);
+      console.log(serializedBlogs);
+      console.log(serializedComments);
+
+      res.status(200).render('homeId', {
+        layout: 'home',
+        user: authorizedAccess,
+        username: req.session.username,
+        serializedUsers,
+        serializedBlogs,
+        serializedComments,
+      });
+    }
+  } catch (err) {
+    console.log(err); // Check the error message
     res.status(500).json(err);
   }
-}
+};
+
+
+
+
+
 
 exports.getGuest = async (req, res) => {
   try {
     const authorizedAccess = req.session.logged_in;
     // If NOT logged in:
     if (!authorizedAccess) {
-      // Return to guest page
-      res.render('guest');
-    } 
 
+      const users = await User.findAll({attributes: ['username', 'dateComment'],});
+      const blogs = await Blog.findAll({attributes: ['title', 'paragraph', 'date']});
+      const comments = await Comment.findAll({attributes: ['comment']});
+
+      const serializedUsers = users.map(user => user.get({ plain: true }));
+      const serializedBlogs = blogs.map(blog => blog.get({ plain: true }));
+      const serializedComments = comments.map(comment => comment.get({ plain: true }));
+
+      res.status(200).render('guest', { 
+        layout: 'guest', 
+        serializedUsers,
+        serializedBlogs,
+        serializedComments,
+        logCheck: true,
+        });
+    } 
     // If the user is logged in:
     else {
       
@@ -53,8 +70,6 @@ exports.getGuest = async (req, res) => {
       if (!user) {
         throw new Error('User not found');
       }
-      
-      
       res.status(200).render('dashboard', { layout: 'dash', username: req.session.username });
     }
   } catch (err) {

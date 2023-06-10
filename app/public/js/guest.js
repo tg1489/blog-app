@@ -1,37 +1,43 @@
-// document.addEventListener('DOMContentLoaded', function() {
-//     const handleLogin = async function(e) {
-//       e.preventDefault();
-//       const loginContainerEl = document.querySelector('.login');
-//       loginContainerEl.style.display = 'block';
-//       const username = document.querySelector('#login-username').value;
-//       const password = document.querySelector('#login-password').value;
-  
-//       try {
-//         const response = await fetch('/login', {
-//           method: 'POST',
-//           body: JSON.stringify({
-//             username: username,
-//             password: password
-//           }),
-//           headers: {
-//             'Content-Type': 'application/json'
-//           }
-//         });
-//         if (response.ok) {
-//           alert('Login successful');
-//           // Redirect to the dashboard or perform other actions
-//           window.location.assign('/dashboard');  // Redirect to the dashboard page
-//         } else {
-//           console.log('Login failed');
-//           alert('Login Failed')
-//         }
-//       } catch (error) {
-//         console.error('An error occurred:', error);
-//         alert('Login failed at catch')
-//       }
-//     };
-  
-//     const loginAnchorEl = document.querySelector('.login-start');
-//     loginAnchorEl.addEventListener('click', handleLogin);
-//   });
-  
+$(() => {
+    
+// JavaScript code to handle button click event
+const button = document.querySelector('.leave-comment');
+const editCommentButton = document.querySelector('.edit');
+const deleteCommentButton = document.querySelector('.delete');
+const usernameElement = document.querySelector('#username');
+const $closeButton = $('.close-button');
+
+
+button.addEventListener('click', () => {
+  // Check if the user is logged in
+  if (!usernameElement) {
+    // User is not logged in, show the login modal
+    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+    loginModal.show();
+    $closeButton.click(() => {loginModal.hide();})
+  }
+});
+
+editCommentButton.addEventListener('click', () => {
+    // Check if the user is logged in
+  if (!usernameElement) {
+    // User is not logged in, show the login modal
+    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+    loginModal.show();
+    $closeButton.click(() => {loginModal.hide();})
+  }
+});
+
+deleteCommentButton.addEventListener('click', () => {
+    // Check if the user is logged in
+  if (!usernameElement) {
+    // User is not logged in, show the login modal
+    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+    loginModal.show();
+    $closeButton.click(() => {loginModal.hide();})
+  }
+});
+
+
+
+});

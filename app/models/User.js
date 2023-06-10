@@ -43,7 +43,23 @@ User.init(
         }, 
         date: {
             type: DataTypes.DATEONLY
-        }
+        },
+        dateComment: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
+        },
+        comment_id: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'comment',
+                key: 'id',
+                // SELECT u.username, c.comment, u.dateComment, 
+                // FROM User u INNER JOIN Comment c
+                // ON u.id = c.user_id
+                // INNER JOIN Blog b
+                // ON b.comment_id = c.blog_id;
+            },
+        },
 
     },
 

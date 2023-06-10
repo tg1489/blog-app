@@ -39,8 +39,8 @@ $(() => {
         console.error(error);
       }
     });
-    
-  }
+}
+
 
   // Event listener for AJAX
   $saveButton.click(handleComment);

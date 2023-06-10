@@ -27,18 +27,39 @@
     </div>
 </nav>
 
-{{!-- Existing Blogs --}}
+
 <div class="container existing-blogs">
-    <div class="row">
-        <div class="col d-flex justify-content-center align-items-center mt-3">
-            <p>Existing Blogs Shown Here</p>
+    {{!-- Row --}}
+    <div class="row blog-center mt-4 mb-4">
+        {{!-- Column --}}
+        {{#each serializedBlogs as |blog|}}
+        <div class="col blog insert-new-comment">
+            <p class="username">{{ @root.username }} <br><br><span id="title-date">{{blog.title}} | {{blog.date}} </span></p>
+    
+            <p class="blog-paragraph append-comment">
+                {{ blog.paragraph }}
+            </p>
+        {{/each}}
+
+  {{#each serializedComments as |comment|}}
+            <p class="p-4 blog-paragraph comment insert-comment">{{ @root.username }} - {{ comment.comment }} <br><br><span type="button" class="edit">Edit Comment</span> <span type="button" class="delete">Delete Comment</span></p>
+            {{/each}}
+          
+            {{!-- <p class="p-4 blog-paragraph comment insert-comment">{{ @root.username }} - Comment goes here</p> --}}
+            <div class="leave-comment btn-open-modal" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Leave Comment</div> 
+            {{!-- <button type="button" class="btn btn-primary btn-open-modal" data-bs-toggle="modal" data-bs-target="#myModal">Open Modal</button> --}}
         </div>
+    </div>
+</div>
+
+
         {{!-- Login Message --}}
-        <div class="col login-message d-flex justify-content-center align-items-center mt-3">
+        <div class="col mb-4 login-message d-flex justify-content-center align-items-center mt-3">
             <h2 class="login-alert">Please <a class="fancy" href="/login">Login</a> or <a class="fancy" href="/register">Sign-Up.</a></h2>
         </div>
     </div>
 </div>
+
 
 
 {{!-- LOGIN Process --}}
@@ -61,3 +82,21 @@
 </div>
 
 
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Login Required</h5>
+        <button id="outerXButton" type="button" class="close close-button" data-dismiss="modal" aria-label="Close">
+          <span id="xButton" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>You must be logged in to perform this action.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="close-button" type="button" class="btn btn-secondary close-button" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
