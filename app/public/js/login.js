@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const handleLogin = async function(e) {
       e.preventDefault();
-      const loginContainerEl = document.querySelector('.login');
-      loginContainerEl.style.display = 'block';
+
       const username = document.querySelector('#login-username').value;
       const password = document.querySelector('#login-password').value;
   
@@ -13,15 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
             username: username,
             password: password
           }),
-          headers: {
-            'Content-Type': 'application/json'
-          }
+          headers: {'Content-Type': 'application/json'}
         });
   
         if (response.ok) {
-          console.log('Login successful');
-          // Redirect to the dashboard or perform other actions
-          window.location.assign('/dashboard');  // Redirect to the dashboard page
+          // document.location.replace("/dashboard"); // Redirect to the dashboard page
+          window.location.assign('/dashboard');  
         } else {
           console.log('Login failed');
           alert('Login Failed')
@@ -34,5 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
     const loginAnchorEl = document.querySelector('.login-start');
     loginAnchorEl.addEventListener('click', handleLogin);
+
+    const loginForm = document.querySelector('#login-form');
+    loginForm.addEventListener('submit', handleLogin);
   });
   

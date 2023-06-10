@@ -57,3 +57,269 @@ div.existing-blogs {
 div.login-message {
     /* border: 1px #000 solid; */
 }
+
+.fancy {
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.fancy:hover {
+    color: rgb(121, 76, 245);
+    
+    -webkit-transition: .5s all;
+    -moz-transition: .5s all;
+    transition: .5s all;
+    font-weight: 400;
+   
+}
+
+a {
+
+    text-decoration: none;
+} 
+
+a:hover {
+    color: #FFF;
+    text-decoration: none;
+}
+
+.blog p:first-child {
+    text-align:left;
+    border-left: 2px solid rgb(28, 28, 28);
+    border-right: 2px solid rgb(28, 28, 28);
+    border-bottom: 1px solid #794cf5d7;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    background-color: rgba(32, 32, 32, 0.708)
+}
+
+.blog-center {
+    justify-content: center;
+}
+
+h3 {
+    font-size: 22px;
+    color: #FFF;
+}
+
+
+
+.create-blog {
+    color: #FFF;
+    text-align: center;
+    font-size: 28px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    border-left: 2px solid rgb(28, 28, 28);
+    border-right: 2px solid rgb(28, 28, 28);
+    border-bottom: 2px solid rgb(28, 28, 28);
+    /* border-bottom: 1px solid #794cf5d7; */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    background-color: rgba(32, 32, 32, 0.708)
+}
+
+.create-blog:hover {
+    box-shadow: 0 2px 4px #794cf5d7;
+    -webkit-transition: .5s all;
+    -moz-transition: .5s all;
+    transition: .5s all;
+}
+
+.create-blog-container {
+    color: #FFF;
+    text-align: center;
+    font-size: 28px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    border-left: 2px solid rgb(28, 28, 28);
+    border-right: 2px solid rgb(28, 28, 28);
+    border-bottom: 2px solid rgb(28, 28, 28);
+    /* border-bottom: 1px solid #794cf5d7; */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    background-color: rgba(32, 32, 32, 0.708)
+}
+
+.mobile-button-fix {
+    background-color: rgb(121, 76, 245);
+    
+}
+
+.navbar-fix {
+    margin-bottom: 1rem;
+}
+
+
+.create-blog-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.create-blog-div {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.create-blog-div:last-child {
+    margin-right: 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+#paragraphId {
+    background-color: #202020;
+    color: #FFF;
+}
+
+/* JQUERY Widget */
+
+.ui-datepicker {
+    background-color: rgb(121, 76, 245);
+  }
+  
+  .ui-datepicker-header {
+    background-color: rgb(121, 76, 245);
+    color: #fff;
+  }
+  
+  .ui-datepicker-prev,
+  .ui-datepicker-next {
+    background-color: rgb(121, 76, 245);
+    color: #fff;
+  }
+  
+  .ui-datepicker-week-day {
+    color: #fff;
+  }
+  
+  /* .ui-datepicker-calendar .ui-state-default {
+    background-color: rgb(121, 76, 245);
+    color: #fff;
+  } */
+
+  .ui-datepicker-week-day {
+    background-color: rgb(121, 76, 245);
+    color: red;
+  }
+  
+  .ui-datepicker tbody td:not(.ui-state-weekend) {
+    background-color: rgb(121, 76, 245);
+    color: red;
+  }
+
+  .ui-datepicker table.ui-datepicker-calendar thead tr:first-child th.ui-datepicker-week-day {
+    background-color: rgb(121, 76, 245);
+    color: red;
+  }
+
+  table {
+    background-color: rgb(121, 76, 245);
+  }
+
+  th {
+    background-color: rgb(121, 76, 245);
+    color: #FFF;
+  }
+  
+  
+.blog-header {
+    text-align:left;
+    border-left: 2px solid rgb(28, 28, 28);
+    border-right: 2px solid rgb(28, 28, 28);
+    /* border-bottom: 1px solid #794cf5d7; */
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    background-color: rgba(32, 32, 32, 0.708)
+}
+
+.blog-paragraph {
+    text-align:left;
+    border-left: 2px solid rgb(28, 28, 28);
+    border-right: 2px solid rgb(28, 28, 28);
+    border-bottom: 1px solid rgb(28, 28, 28);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    background-color: rgba(32, 32, 32, 0.708)
+}
+   
+#title-date {
+    color: #FFF;
+    font-size: 22px;
+}
+
+.insert-comment {
+    color: orange;
+}
+
+.leave-comment {
+    width: 17vw;
+    text-align:center;
+    border-left: 2px solid rgb(28, 28, 28);
+    border-right: 2px solid rgb(28, 28, 28);
+    border-bottom: 1px solid orange;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    /* margin: 1rem; */
+    color: #FFF;
+}
+
+.leave-comment:hover {
+    /* box-shadow: 0 2px 4px orange; */
+    /* color: orange; */
+}
+
+:focus-visible {
+    outline: orange auto 0;
+}
+
+.enter-comment {
+    color: orange;
+}
+
+.x {
+    color: orange;
+    background-color: #202020
+}
+
+.xButton {
+    background-color: #202020
+}
+
+.modal-footer {
+    background-color: #202020;
+}
+
+.modal-body p {
+    color: #FFF;
+}
+
+.save {
+    background-color: #202020;
+    color: #FFF;
+    border-color: #6c757d;
+}
+
+.save:hover {
+    background-color: #202020;
+    border-color: #6c757d;
+    color: #FFF;
+}
+
+.btn-primary {
+    --bs-btn-active-bg: none;
+}
+
+.btn:hover {
+    border-color: orange;
+    --bs-btn-active-border-color: orange;
+}
+
+.save:active {
+    background-color: #6c757d;
+    color: orange;
+}

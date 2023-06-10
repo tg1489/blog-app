@@ -7,17 +7,31 @@ const routes = require('./app/routes/router');
 const session = require('express-session');
 const generateKey = require('./app/utils/helpers');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const handlebarHelpers = require('./app/utils/handlebar-helpers');
+
+
 
 const app = express();
 const viewsPath = join(__dirname, './app/views');
 const hbs = exphbs.create({
       defaultLayout: 'guest',
-      layoutsDir: viewsPath + '/layouts'
+      layoutsDir: viewsPath + '/layouts',
+      helpers: handlebarHelpers, // Used to make the comments show in reverse order so newest are on top
 });
+const addUserIdToRequest = (req, res, next) => {
+      // Check if the session object exists and has the user_id property
+      if (req.session && req.session.user_id) {
+        req.user_id = req.session.user_id; // Add user_id property to the request object
+      }
+    
+      next(); // Move to the next middleware
+    };
 
 app.use(express.json());
       app.use(express.urlencoded({ extended: true }));
       app.use(express.static(join(__dirname, './app/public')));
+      app.use(addUserIdToRequest);
+      
       app.use(session({
             secret: generateKey,
             cookie: {
@@ -30,14 +44,6 @@ app.use(express.json());
                   db: sequelize,
                 }), 
       }));
-
-      // Content-Type for JavaScript files
-      app.use((req, res, next) => {
-            if (req.url.endsWith('.js')) {
-            res.setHeader('Content-Type', 'application/javascript');
-            }
-            next();
-      });
 
       app.set('views', viewsPath);
       app.engine('handlebars', hbs.engine);

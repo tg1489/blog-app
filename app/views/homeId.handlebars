@@ -1,0 +1,89 @@
+{{!-- Navbar --}}
+<nav class="navbar navbar-expand-lg">
+    <a id="title" class="navbar-brand" href="/home">Blog App</a>
+    <button class="navbar-toggler" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" 
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon mobile-button-fix"></span>
+    </button>
+
+{{!-- Navbar List Items --}}
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">{{ username }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<br>
+<br>
+<h1>Home Page!</h1>
+
+
+{{!-- Existing Blogs --}}
+
+<div class="container existing-blogs">
+    {{!-- Row --}}
+    <div class="row blog-center mt-4 mb-4">
+        {{!-- Column --}}
+        {{#each serializedBlogs as |blog|}}
+        <div class="col blog insert-new-comment">
+            <p class="username">{{ @root.username }} <br><br><span id="title-date">{{blog.title}} | {{blog.date}} </span></p>
+    
+            <p class="blog-paragraph append-comment">
+                {{ blog.paragraph }}
+            </p>
+        {{/each}}
+
+  {{#each (reverse serializedComments) as |comment|}}
+            <p class="p-4 blog-paragraph comment insert-comment">{{ @root.username }} - {{ comment.comment }}</p>
+            {{/each}}
+          
+            {{!-- <p class="p-4 blog-paragraph comment insert-comment">{{ @root.username }} - Comment goes here</p> --}}
+            <div class="leave-comment btn-open-modal" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Leave Comment</div> 
+            {{!-- <button type="button" class="btn btn-primary btn-open-modal" data-bs-toggle="modal" data-bs-target="#myModal">Open Modal</button> --}}
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="enter-comment modal-title">Enter Comment</h5>
+        <button type="button" class="close xButton" data-dismiss="modal" aria-label="Close">
+          <span class="x" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{!-- Text --}}
+        <input id="comment" name="comment" type="text">
+
+      </div>
+      <div class="modal-footer">
+        <button id="comment-save" type="button" class="btn btn-primary save">Save changes</button>
+        <button type="button" class="btn btn-secondary comment-close" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -29,32 +29,40 @@
         </ul>
     </div>
 </nav>
-
-
-
 <br>
-<h1>Welcome to your Dashboard!</h1>
+
+
+
+<p>Create your blog below</p>
 
 <div class="container create-blog-container">
-    <div class="row create-blog-row d-flex justify-content-center">
-
-
-        <a class="col-3 mt-4 mb-4 create-blog" href="/blog">
-            <div class="create-blog-div">
-                Create New Blog
+    <form class="form-create-blog">
+        <div class="row create-blog-row">
+            <div class="col create-blog-div">
+                <label for="title">Title:</label>
+                <input id="titleId" class="form-blog-title" type="text" name="title">
             </div>
-        </a>
-       
-        <a class="col-3 mt-4 mb-4 create-blog" href="/SomethingElse"><div>
-            Something Else
-        </div></a>
-  
-        <a class="col-3 mt-4 mb-4 create-blog" href="/SomethingElse"><div>
-            Something Else
-        </div></a>
+            <div class="col create-blog-div">
+                <label for="date">Date:</label>
+                <input id="dateId" class="form-blog-date" type="text" name="date">
+            </div>
+        </div>
+        <div class="row create-blog-row">
+            <div class="col create-blog-div">
+                <label for="paragraph">Message:</label>
+                <textarea id="paragraphId" class="form-blog-paragraph form-control" cols="30" rows="5" type="text" name="paragraph">
+                    
+                    </textarea>
+            </div>
+        </div>
+        <div class="row create-blog-row">
+            <div class="col create-blog-div">
+                <button id="submitId" class="form-blog-submit" type="submit" name="submit">Submit</button>
 
-
-    </div>
+            </div>
+        </div>
+    </form>
 </div>
+
 
 

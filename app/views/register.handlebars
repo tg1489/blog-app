@@ -1,3 +1,31 @@
+{{!-- Navbar --}}
+<nav class="navbar navbar-expand-lg">
+    <a id="title" class="navbar-brand" href="/home">Blog App</a>
+    <button class="navbar-toggler" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" 
+            aria-expanded="false" 
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon mobile-button-fix"></span>
+    </button>
+
+{{!-- Navbar List Items --}}
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a id="dashboard" class="nav-link" href="/dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a id="login-start" class="nav-link" href="/login">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
 <!-- main -->
 	<div class="main-w3layouts wrapper">
@@ -10,10 +38,10 @@
 					<input id="register-password" class="text" type="password" name="password" placeholder="Password" required="">
 					<input id="register-confirm-password" class="text w3lpass" type="password" name="password" placeholder="Confirm Password" required="">
 					<div class="wthree-text">
-						<label class="anim">
+						{{!-- <label class="anim">
 							<input id="register-checkbox" type="checkbox" class="checkbox" required="">
 							<span>I Agree To The Terms & Conditions</span>
-						</label>
+						</label> --}}
 						<div class="clear"> </div>
 					</div>
 					<input id="register-input-button" type="submit" value="SIGNUP">
