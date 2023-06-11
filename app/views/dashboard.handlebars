@@ -35,8 +35,8 @@
 <br>
 <h1>Welcome to your Dashboard!</h1>
 
-<div class="container create-blog-container">
-    <div class="row create-blog-row d-flex justify-content-center">
+<div class="container-fluid create-blog-container">
+    <div id="remove-space" class="row create-blog-row d-flex justify-content-center">
 
 
         <a class="col-3 mt-4 mb-4 create-blog" href="/blog">
@@ -45,16 +45,74 @@
             </div>
         </a>
        
-        <a class="col-3 mt-4 mb-4 create-blog" href="/SomethingElse"><div>
-            Something Else
-        </div></a>
+    <div class="col-3 mr-3 mt-4 mb-4 create-blog blog-posts-button pointer">
+            Blog Posts
+                
+    </div>
+
+
   
         <a class="col-3 mt-4 mb-4 create-blog" href="/SomethingElse"><div>
             Something Else
         </div></a>
+    </div>
+    <div class="row create-blog-row d-flex justify-content-center">
+        <div class="col-6">
 
+            {{#each serializedBlogs as |blog|}}
+            <ul class="col mb-1 blog-dropdown blog-border-style">
+                   
+                    <li>
 
+                        {{!-- Title --}}
+                        <a data-id="{{ blog.id }}" class="blog-dropdown-item d-flex justify-content-center" href="/home">{{ blog.title }}</a>
+
+                        {{!-- Edit/Delete --}}
+                        <span class="d-flex justify-content-center">
+                              <span type="button" class="edit pointer mr-1">Edit Blog</span>
+                              {{!-- Hidden Edit div that looks like create blog --}}
+                              
+<div class="container edit-blog-container">
+    <form class="form-create-blog">
+        <div class="row create-blog-row">
+            <div class="col create-blog-div">
+                <label for="title">Title:</label>
+                <input value="{{ blog.title }}" id="titleId" class="form-blog-title" type="text" name="title">
+            </div>
+            <div class="col create-blog-div">
+                <label for="date">Date:</label>
+                <input value="{{ blog.date }}" id="dateId" class="form-blog-date" type="text" name="date">
+            </div>
+        </div>
+        <div class="row create-blog-row">
+            <div class="col create-blog-div">
+                <label for="paragraph">Message:</label>
+                <textarea id="paragraphId" class="form-blog-paragraph form-control" cols="30" rows="5" type="text" name="paragraph">
+                    {{ blog.paragraph }}
+                </textarea>
+            </div>
+        </div>
+        <div class="row create-blog-row">
+            <div class="col create-blog-div">
+                <button id="submitId" class="form-blog-submit" type="submit" name="submit">Submit</button>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+                              <span type="button" class="delete pointer">Delete Blog</span>
+                        </span>
+                      
+                    
+                    </li>
+
+                </ul>
+            
+            {{/each}}
+        </div>
     </div>
 </div>
+
 
 

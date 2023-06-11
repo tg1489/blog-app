@@ -36,11 +36,6 @@ exports.home = async (req, res) => {
   }
 };
 
-
-
-
-
-
 exports.getGuest = async (req, res) => {
   try {
     const authorizedAccess = req.session.logged_in;
@@ -216,11 +211,15 @@ exports.dashboard = async (req, res) => {
       res.redirect('/login');
     } else {
       const user = await User.findByPk(req.session.user_id);
-      const serializedUser = user.get({ plain: true })
+      const userBlogs = await Blog.findAll({attributes: ['id', 'title', 'paragraph', 'date']});
+
+      const serializedBlogs = userBlogs.map((blog) => blog.get({ plain: true }));
+      const serializedUser = user.get({ plain: true });
       // User is logged in, render the dashboard page
       res.status(200).render('dashboard', { 
         layout: 'dash',
         serializedUser, 
+        serializedBlogs, 
         username: req.session.username,
       });
     }
@@ -229,6 +228,43 @@ exports.dashboard = async (req, res) => {
     console.error(err);
   }
 };
+
+exports.putDashboard = async (req, res) => {
+  // Retrieve the blogId from the request parameters
+  const { blogId } = req.params;
+
+  try {
+    // Update the blog with the given blogId using the data from the request body
+    // Replace this with your actual logic to update the blog
+    const updatedBlog = await Blog.findByIdAndUpdate(blogId, req.body, { new: true });
+
+    // Send a response indicating successful update
+    res.status(200).json({ message: 'Blog updated successfully', blog: updatedBlog });
+  } catch (error) {
+    // Handle any errors that occurred during the update process
+    console.error('Error updating blog:', error);
+    res.status(500).json({ message: 'Failed to update blog' });
+  }
+};
+
+exports.deleteDashboard = async (req, res) => {
+  // Retrieve the blogId from the request parameters
+  const { blogId } = req.params;
+
+  try {
+    // Delete the blog with the given blogId
+    await Blog.findByIdAndRemove(blogId);
+
+    res.status(200).json({ message: 'Blog deleted successfully' });
+  } 
+  
+  catch (error) {
+    
+    console.error('Error deleting blog:', error);
+    res.status(500).json({ message: 'Failed to delete blog' });
+  }
+};
+
 
 exports.getBlog = async (req, res) => {
   try {

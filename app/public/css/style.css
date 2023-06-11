@@ -1,3 +1,7 @@
+:root {
+    --main-color: rgb(121, 76, 245);
+}
+
 html, body {
     background-color: rgb(32, 32, 32);
     margin: 0;
@@ -322,4 +326,8 @@ label {
 .save:active {
     background-color: #6c757d;
     color: orange;
+}
+
+.pointer {
+    cursor: pointer;
 }

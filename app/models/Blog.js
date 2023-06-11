@@ -31,6 +31,7 @@ Blog.init(
         model: 'user',
         key: 'id',
       },
+      onDelete: 'CASCADE',
     },
     comment_id: {
       type: DataTypes.INTEGER,
@@ -38,6 +39,7 @@ Blog.init(
         model: 'comment',
         key: 'id',
       },
+      onDelete: 'CASCADE',
     },
   },
   {

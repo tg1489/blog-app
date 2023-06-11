@@ -1,0 +1,32 @@
+a {
+    color: var(--main-color);
+    text-decoration: none;
+}
+
+/* Blog Title */
+.blog-border-style a {
+    display: flex;
+    flex-direction: row;
+    border: 1 solid #FFF;
+    font-size: 28px;
+    padding: 1rem;
+    margin: 0;
+}
+
+/* Blog Edit/Delete */
+span {
+    display: flex;
+    flex-direction: row;
+    border: 1 solid #FFF;
+    font-size: 14px;
+    padding: 1rem;
+
+}
+
+input {
+    width: 30%;
+}
+
+.edit-blog-container {
+
+}

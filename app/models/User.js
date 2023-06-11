@@ -59,6 +59,7 @@ User.init(
                 // INNER JOIN Blog b
                 // ON b.comment_id = c.blog_id;
             },
+            onDelete: 'CASCADE',
         },
 
     },
