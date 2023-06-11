@@ -8,6 +8,8 @@ $(() => {
         const $date = $('#dateId').val();
         const $paragraph = $('#paragraphId').val().trim();
 
+        
+
         $.ajax({
             url: "/blog",
             method: "POST",

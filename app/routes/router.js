@@ -15,9 +15,9 @@ router.post('/register', userController.postRegister);
 router.post('/login', userController.postLogin);
 router.post('/blog', userController.postBlog);
 
-router.put('/dashboard/edit/:id', userController.putDashboard);
+router.put('/dashboard', userController.putDashboard);
 
-router.delete('/dashboard/delete/:id', userController.deleteDashboard);
+router.delete('/dashboard/delete', userController.deleteDashboard);
 
 
 module.exports = router;

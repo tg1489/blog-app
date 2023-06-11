@@ -230,13 +230,16 @@ exports.dashboard = async (req, res) => {
 };
 
 exports.putDashboard = async (req, res) => {
-  // Retrieve the blogId from the request parameters
-  const { blogId } = req.params;
-
+  
   try {
+
+    // Retrieve the blogId from the request parameters
+    const { blogId, title, date, paragraph } = req.body;
+    
     // Update the blog with the given blogId using the data from the request body
-    // Replace this with your actual logic to update the blog
-    const updatedBlog = await Blog.findByIdAndUpdate(blogId, req.body, { new: true });
+    
+    const updatedBlog = await Blog.update(req.body , { where: { id: blogId } });
+   
 
     // Send a response indicating successful update
     res.status(200).json({ message: 'Blog updated successfully', blog: updatedBlog });
@@ -249,17 +252,14 @@ exports.putDashboard = async (req, res) => {
 
 exports.deleteDashboard = async (req, res) => {
   // Retrieve the blogId from the request parameters
-  const { blogId } = req.params;
+  const { blogId } = req.body;
 
   try {
     // Delete the blog with the given blogId
-    await Blog.findByIdAndRemove(blogId);
+    await Blog.destroy({ where: { id: blogId } });
 
     res.status(200).json({ message: 'Blog deleted successfully' });
-  } 
-  
-  catch (error) {
-    
+  } catch (error) {
     console.error('Error deleting blog:', error);
     res.status(500).json({ message: 'Failed to delete blog' });
   }

@@ -26,35 +26,74 @@ $(() => {
           $editBlogContainer.hide(); // Hide the edit-blog-container for other blogs
           $clickedBlogEditContainer.show();
         }
-  
-        // Send AJAX request to retrieve the blog data and populate the edit-blog-container
-        $.ajax({
-          type: 'PUT',
-          url: `/dashboard/edit/${$blogId}`,
-          success: function(response) {
-    
-            $clickedBlogEditContainer.html(response);
 
-          },
-          error: function(error) {
-            console.error('Error retrieving blog data:', error);
-          }
-        });
+
+        
+  
+        
       });
     });
+
+    // FORM EDIT
+    const $form = $('.form-create-blog');
+    $form.on('submit', (e) => {
+      e.preventDefault();
+      const $blogId = $(this).closest('li').find('.blog-dropdown-item').data('id');
+        const $clickedBlogEditContainer = $(this).closest('li').find('.edit-blog-container');
+  
+        if ($clickedBlogEditContainer.is(':visible')) {
+            $clickedBlogEditContainer.hide();
+        } else {
+          $editBlogContainer.hide(); // Hide the edit-blog-container for other blogs
+          $clickedBlogEditContainer.show();
+        }
+        
+        const $title = $('#titleId').val().trim();
+        const $date = $('#dateId').val();
+        const $paragraph = $('#paragraphId').val();
+
+      // Send AJAX request to retrieve the blog data and populate the edit-blog-container
+      $.ajax({
+        type: 'PUT',
+        url: `/dashboard`,
+        data: {
+          blogId: $blogId,
+          title: $title,
+          date: $date,
+          paragraph: $paragraph,
+        },
+        success: function(response) {
+
+          $clickedBlogEditContainer.html(response);
+          console.log(`Front End Response: ${response}`);
+
+        },
+        error: function(error) {
+          console.error('Error retrieving blog data:', error);
+        },
+      });
+      });
+      // END FORM EDIT
   
     $deleteButton.on('click', function() {
       const blogId = $(this).closest('li').find('.blog-dropdown-item').data('id');
+      const $blogEl = $(this).closest('li'); // Grabs the <li> item clicked
   
       $.ajax({
         type: 'DELETE',
-        url: `/dashboard/delete/${blogId}`,
+        url: `/dashboard/delete`,
+        data: {blogId: blogId},
         success: function(response) {
+
           console.log('Blog deleted successfully');
+
+          // Remove blog element right away
+          $blogEl.remove();
+
         },
         error: function(error) {
           console.error('Error deleting blog:', error);
-        }
+        },
       });
     });
   });
