@@ -29,28 +29,27 @@
 
 
 <div class="container existing-blogs">
-    {{!-- Row --}}
-    <div class="row blog-center mt-4 mb-4">
-        {{!-- Column --}}
-        {{#each serializedBlogs as |blog|}}
-        <div class="col blog insert-new-comment">
-            <p class="username">{{ @root.username }} <br><br><span id="title-date">{{blog.title}} | {{blog.date}} </span></p>
-    
-            <p class="blog-paragraph append-comment">
-                {{ blog.paragraph }}
-            </p>
-        {{/each}}
+  {{!-- Row --}}
+  <div class="row blog-center mt-4 mb-4">
+    {{!-- Column --}}
+    {{#each serializedBlogs as |blog|}}
+    <div class="col blog insert-new-comment">
+      <p class="username">{{blog.User.username}} <br><br><span id="title-date">{{blog.title}} | {{blog.date}} </span></p>
 
-  {{#each serializedComments as |comment|}}
-            <p class="p-4 blog-paragraph comment insert-comment">{{ @root.username }} - {{ comment.comment }} 
-            {{/each}}
-          
-            {{!-- <p class="p-4 blog-paragraph comment insert-comment">{{ @root.username }} - Comment goes here</p> --}}
-            <div class="leave-comment btn-open-modal" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Leave Comment</div> 
-            {{!-- <button type="button" class="btn btn-primary btn-open-modal" data-bs-toggle="modal" data-bs-target="#myModal">Open Modal</button> --}}
-        </div>
+      <p class="blog-paragraph append-comment">
+        {{blog.paragraph}}
+      </p>
+
+      {{#each blog.Comments as |comment|}}
+      <p class="p-4 blog-paragraph comment insert-comment">{{comment.User.username}} - {{comment.body}}</p>
+      {{/each}}
+
+      <div class="leave-comment btn-open-modal" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Leave Comment</div>
     </div>
+    {{/each}}
+  </div>
 </div>
+
 
 
         {{!-- Login Message --}}

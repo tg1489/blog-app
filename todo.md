@@ -67,10 +67,10 @@ THEN I am signed out of the site -->
 THEN I am able to view posts and comments but I am prompted to log in again before I can add, update, or delete posts -->
 
 OTHER: 
-- log in checks dont work everywhere. 
+
+- Can't update blog post
+- How to show comments on home page
 - Add username with comments
-- Put logout on all pages
-- fix /home route which shows only Leave Comment button
 - fix comment position in /home under appropriate blog
 
 
