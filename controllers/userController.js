@@ -45,10 +45,19 @@ exports.getGuest = async (req, res) => {
   try {
     // Find out if user is logged in
     const authorizedAccess = req.session.logged_in;
+    const id = await User.findAll({
+      attributes: ['id'],
+    });
 
     // If user is not logged in, show all blogs on the guest page
     if (!authorizedAccess) {
-      const blogs = await Blog.findAll({});
+      const blogs = await Blog.findAll({
+        attributes: ['title', 'paragraph', 'date', 'userId'],
+        include: {
+          model: User,
+          attributes: ['username'],
+        },
+      });
 
       // Convert blogs to readable data
       const serializedBlogs = blogs.map((blog) => blog.get({ plain: true }));
@@ -205,14 +214,17 @@ exports.dashboard = async (req, res) => {
     } else {
       const user = await User.findByPk(req.session.user_id);
 
+      // Finds blogs for logged in user only
       const userBlogs = await Blog.findAll({
         attributes: ['id', 'title', 'paragraph', 'date'],
+        where: { id: user.id },
       });
 
       const serializedBlogs = userBlogs.map((blog) =>
         blog.get({ plain: true })
       );
       const serializedUser = user.get({ plain: true });
+
       // User is logged in, render the dashboard page
       res.status(200).render('dashboard', {
         layout: 'dash',
@@ -230,15 +242,21 @@ exports.dashboard = async (req, res) => {
 exports.putDashboard = async (req, res) => {
   try {
     // Retrieve the blogId from the request parameters
-    const { blogId, title, paragraph, date } = req.body;
 
+    const { id, title, paragraph, date } = req.body;
+
+    console.log(id, 'blog id');
     // Update the blog with the given blogId using the data from the request body
-
+    if (!id) {
+      return res.status(400).json({ message: 'missing blog id' });
+    }
     const updatedBlog = await Blog.update(
       { title, paragraph, date },
-      { where: { id: blogId } }
+      { where: { id: id } }
     );
-
+    if (updatedBlog[0] === 0) {
+      return res.status(404).json({ message: 'blog not found' });
+    }
     // Send a response indicating successful update
     res
       .status(200)
