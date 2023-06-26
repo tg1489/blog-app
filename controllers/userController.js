@@ -231,6 +231,7 @@ exports.putDashboard = async (req, res) => {
   try {
     // Retrieve the blogId from the request parameters
     const { blogId, title, paragraph, date } = req.body;
+    
 
     // Update the blog with the given blogId using the data from the request body
 
