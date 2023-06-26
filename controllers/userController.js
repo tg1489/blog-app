@@ -1,38 +1,37 @@
-const { User, Blog, Comment } = require("../models");
+const { User, Blog, Comment } = require('../models');
 
 exports.home = async (req, res) => {
   try {
     const authorizedAccess = req.session.logged_in;
     if (!authorizedAccess) {
-      res.render("guest");
+      res.render('guest');
     } else {
-      const users = await User.findAll({
-        attributes: ["id", "username"],
-      });
       const blogs = await Blog.findAll({
-        attributes: ["title", "paragraph", "date"],
+        attributes: ['title', 'paragraph', 'date'],
         include: [
+          // Sets username to Blog Title?
+          { model: User, attributes: ['id', 'username'] },
           {
+            // Gets comments and commentID
             model: Comment,
-            attributes: ["userId", "body"],
+            attributes: ['userId', 'body'],
             include: [
               {
+                // Gets username of user who made comment
                 model: User,
-                attributes: ["username"],
+                attributes: ['username'],
               },
             ],
           },
         ],
       });
 
-      const serializedUsers = users.map((user) => user.get({ plain: true }));
       const serializedBlogs = blogs.map((blog) => blog.get({ plain: true }));
       console.log(serializedBlogs);
-      res.status(200).render("homeId", {
-        layout: "home",
+      res.status(200).render('homeId', {
+        layout: 'home',
         user: authorizedAccess,
         username: req.session.username,
-        serializedUsers,
         serializedBlogs,
       });
     }
@@ -44,43 +43,28 @@ exports.home = async (req, res) => {
 
 exports.getGuest = async (req, res) => {
   try {
+    // Find out if user is logged in
     const authorizedAccess = req.session.logged_in;
 
+    // If user is not logged in, show all blogs on the guest page
     if (!authorizedAccess) {
-      const blogs = await Blog.findAll({
-        attributes: ["id", "title", "paragraph", "date"],
-        include: [
-          {
-            model: User,
-            attributes: ["username"],
-          },
-          {
-            model: Comment,
-            attributes: ["id", "body"],
-            include: [
-              {
-                model: User,
-                attributes: ["username"],
-              },
-            ],
-          },
-        ],
-      });
+      const blogs = await Blog.findAll({});
 
+      // Convert blogs to readable data
       const serializedBlogs = blogs.map((blog) => blog.get({ plain: true }));
 
-      res.status(200).render("guest", {
-        layout: "guest",
+      res.status(200).render('guest', {
+        layout: 'guest',
         serializedBlogs,
         logCheck: true,
       });
     } else {
       const user = await User.findByPk(req.session.user_id);
       if (!user) {
-        throw new Error("User not found");
+        throw new Error('User not found');
       }
-      res.status(200).render("dashboard", {
-        layout: "dash",
+      res.status(200).render('dashboard', {
+        layout: 'dash',
         username: req.session.username,
       });
     }
@@ -91,8 +75,8 @@ exports.getGuest = async (req, res) => {
 
 exports.getLogin = async (req, res) => {
   try {
-    res.status(200).render("login", {
-      layout: "login",
+    res.status(200).render('login', {
+      layout: 'login',
       logged_in: req.session.logged_in,
       user_id: req.session.user_id,
     });
@@ -116,7 +100,7 @@ exports.postLogin = async (req, res) => {
     if (!userData) {
       res
         .status(400)
-        .json({ message: "Incorrect Username or password, please try again" });
+        .json({ message: 'Incorrect Username or password, please try again' });
       return;
     }
 
@@ -125,7 +109,7 @@ exports.postLogin = async (req, res) => {
     if (!validPassword) {
       res
         .status(400)
-        .json({ message: "Incorrect Username or password, please try again" });
+        .json({ message: 'Incorrect Username or password, please try again' });
       return;
     }
 
@@ -136,7 +120,7 @@ exports.postLogin = async (req, res) => {
 
       res
         .status(200)
-        .json({ user: userData, message: "You are now logged in!" });
+        .json({ user: userData, message: 'You are now logged in!' });
     });
   } catch (err) {
     res.status(400).json(err);
@@ -148,16 +132,16 @@ exports.logout = async (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy((err) => {
       err
-        ? res.status(500).json({ error: "Internal service error." })
-        : res.status(200).redirect("/");
+        ? res.status(500).json({ error: 'Internal service error.' })
+        : res.status(200).redirect('/');
     });
   }
 };
 
 exports.getRegister = async (req, res) => {
   try {
-    res.status(200).render("register", {
-      layout: "register",
+    res.status(200).render('register', {
+      layout: 'register',
       logged_in: req.session.logged_in,
       user_id: req.session.user_id,
     });
@@ -178,7 +162,7 @@ exports.postRegister = async (req, res) => {
 
       // res.redirect(`/home/${req.pa}`);
 
-      res.status(200).json({ message: "You are now logged in!" });
+      res.status(200).json({ message: 'You are now logged in!' });
     });
   } catch (err) {
     res.status(400).json(err);
@@ -190,21 +174,19 @@ exports.postHome = async (req, res) => {
     const authorizedAccess = req.session.logged_in;
 
     if (!authorizedAccess) {
-      return res.status(401).json({ error: "Unauthorized" });
+      return res.status(401).json({ error: 'Unauthorized' });
     }
 
     const user = await User.findByPk(req.session.user_id);
 
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: 'User not found' });
     }
 
-    const { body } = req.body;
-
     const newComment = await Comment.create({
-      body: body,
-      userId: user.id,
-      blogId: user.id,
+      body: req.body,
+      userId: req.session.user_id,
+      blogId: req.session.user_id,
     });
     res.status(200).json({ success: true, comment: newComment });
   } catch (err) {
@@ -219,11 +201,12 @@ exports.dashboard = async (req, res) => {
 
     if (!authorizedAccess) {
       // User is not logged in, redirect to login page
-      res.redirect("/login");
+      res.redirect('/login');
     } else {
       const user = await User.findByPk(req.session.user_id);
+
       const userBlogs = await Blog.findAll({
-        attributes: ["id", "title", "paragraph", "date"],
+        attributes: ['id', 'title', 'paragraph', 'date'],
       });
 
       const serializedBlogs = userBlogs.map((blog) =>
@@ -231,8 +214,8 @@ exports.dashboard = async (req, res) => {
       );
       const serializedUser = user.get({ plain: true });
       // User is logged in, render the dashboard page
-      res.status(200).render("dashboard", {
-        layout: "dash",
+      res.status(200).render('dashboard', {
+        layout: 'dash',
         serializedUser,
         serializedBlogs,
         username: req.session.username,
@@ -256,11 +239,11 @@ exports.putDashboard = async (req, res) => {
     // Send a response indicating successful update
     res
       .status(200)
-      .json({ message: "Blog updated successfully", blog: updatedBlog });
+      .json({ message: 'Blog updated successfully', blog: updatedBlog });
   } catch (error) {
     // Handle any errors that occurred during the update process
-    console.error("Error updating blog:", error);
-    res.status(500).json({ message: "Failed to update blog" });
+    console.error('Error updating blog:', error);
+    res.status(500).json({ message: 'Failed to update blog' });
   }
 };
 
@@ -272,24 +255,25 @@ exports.deleteDashboard = async (req, res) => {
     // Delete the blog with the given blogId
     await Blog.destroy({ where: { id: blogId } });
 
-    res.status(200).json({ message: "Blog deleted successfully" });
+    res.status(200).json({ message: 'Blog deleted successfully' });
   } catch (error) {
-    console.error("Error deleting blog:", error);
-    res.status(500).json({ message: "Failed to delete blog" });
+    console.error('Error deleting blog:', error);
+    res.status(500).json({ message: 'Failed to delete blog' });
   }
 };
 
 exports.getBlog = async (req, res) => {
   try {
     // Checks if user is logged in
-    const user = req.session.user_id;
+    const user = req.session.user_id; // Finds user by ID they are signed in with
+
     if (!user) {
-      res.render("login", { layout: "login" });
+      res.render('login', { layout: 'login' });
     } else {
       const user = await User.findByPk(req.session.user_id);
       const serializedUser = user.get({ plain: true });
-      res.status(200).render("createBlog", {
-        layout: "blog",
+      res.status(200).render('createBlog', {
+        layout: 'blog',
         user: user,
         serializedUser,
         username: req.session.username,
@@ -306,21 +290,20 @@ exports.getBlog = async (req, res) => {
 exports.postBlog = async (req, res) => {
   try {
     // Get the logged-in user ID from the session
-    const userId = req.session.user_id;
+    const user = await User.findByPk(req.session.user_id);
 
     // Check if the user is logged in
-    if (!userId) {
-      return res.status(401).json({ error: "Unauthorized" });
+    if (!user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    } else {
+      // Create the blog entry and associate it with the user
+      const blogData = await Blog.create({
+        title: req.body.title,
+        paragraph: req.body.paragraph,
+        date: req.body.date,
+      });
+      res.status(200).json({ success: true, blogData });
     }
-
-    // Create the blog entry and associate it with the user
-    const blogData = await Blog.create({
-      title: req.body.title,
-      paragraph: req.body.paragraph,
-      date: req.body.date,
-    });
-
-    res.status(200).json({ success: true, blogData });
   } catch (err) {
     res.status(400).json({ success: false, error: err });
   }

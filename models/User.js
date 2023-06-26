@@ -1,6 +1,6 @@
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../config/connection");
-const bcrypt = require("bcrypt");
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/connection');
+const bcrypt = require('bcrypt');
 
 class User extends Model {
   checkPassword(loginPw) {
@@ -41,8 +41,8 @@ User.init(
     commentId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "comment",
-        key: "id",
+        model: 'comment',
+        key: 'id',
       },
     },
   },
@@ -64,7 +64,7 @@ User.init(
 
     sequelize,
     timestamps: false,
-    tableName: "user",
+    tableName: 'user',
     freezeTableName: true,
   }
 );

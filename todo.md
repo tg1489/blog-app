@@ -66,12 +66,16 @@ THEN I am signed out of the site -->
 <!-- WHEN I am idle on the site for more than a set time
 THEN I am able to view posts and comments but I am prompted to log in again before I can add, update, or delete posts -->
 
-OTHER: 
+ISSUES: 
 
-- Can't update blog post
-- How to show comments on home page
-- Add username with comments
-- fix comment position in /home under appropriate blog
+- Username of person who made Blog doesn't appear.
+- Dashboard shows Blog Posts from all users not the specific user logged in.
+- Can't update Blog Post
+- Comments aren't working anymore.
+- Comments don't get posted under the right blog in the backend.
+- When comments did work, they get posted to all blogs (On front end only) and not individual blogs.
+- "You must be logged in to perform this action." on home page only works on one blog
+
 
 
 
