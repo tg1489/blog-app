@@ -231,11 +231,13 @@ exports.putDashboard = async (req, res) => {
   try {
     // Retrieve the blogId from the request parameters
     const { blogId, title, paragraph, date } = req.body;
-    
 
     // Update the blog with the given blogId using the data from the request body
 
-    const updatedBlog = await Blog.update(req.body, { where: { id: blogId } });
+    const updatedBlog = await Blog.update(
+      { title, paragraph, date },
+      { where: { id: blogId } }
+    );
 
     // Send a response indicating successful update
     res
