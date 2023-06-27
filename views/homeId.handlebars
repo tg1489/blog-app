@@ -42,14 +42,14 @@
     
    {{!-- Column --}}
 {{#each serializedBlogs as |blog|}}
-  <div class="col blog insert-new-comment" name="blog-id" value="{{blog.id}}">
+<div class="col blog insert-new-comment" data-blog-id="{{blog.id}}">
     <p>Blog.id 1st: {{blog.id}}</p>
     <p class="username">Dynamic Username: {{blog.user}} <br><br><span id="title-date">{{blog.title}} | {{blog.date}} </span></p>
     <p class="blog-paragraph append-comment">{{blog.paragraph}}</p>
 
     {{!-- Comments --}}
     {{#each (lookup blog 'comments') as |comment|}}
-      <p class="p-4 blog-paragraph comment insert-comment">{{comment.user}} - {{comment.body}} Blog ID:{{comment.blogId}}</p>
+      <p id="{{blog.id}}" class="p-4 blog-paragraph comment insert-comment">{{comment.user}} - {{comment.body}} Blog ID:{{comment.blogId}}</p>
     {{/each}}
 
     <div class="leave-comment btn-open-modal" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Leave Comment</div>

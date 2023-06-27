@@ -72,8 +72,8 @@ ISSUES:
 <!-- - Dashboard shows Blog Posts from all users not the specific user logged in. -->
 <!-- - Can't update Blog Post -->
 <!-- - Comments aren't working anymore. -->
-- Comments don't get posted under the right blog in the backend.
-- When comments did work, they get posted to all blogs (On front end only) and not individual blogs.
+<!-- - Comments don't get posted under the right blog in the backend.
+- When comments did work, they get posted to all blogs (On front end only) and not individual blogs. -->
 - "You must be logged in to perform this action." on home page only works on one blog
 
 
