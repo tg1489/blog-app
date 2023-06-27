@@ -9,30 +9,36 @@ exports.home = async (req, res) => {
       const blogs = await Blog.findAll({
         attributes: ['title', 'paragraph', 'date'],
         include: [
-          // Sets username to Blog Title?
+          // Sets username to Blog Title
           { model: User, attributes: ['id', 'username'] },
+        ],
+      });
+
+      const comments = await Comment.findAll({
+        attributes: ['body', 'userId'],
+        include: [
           {
-            // Gets comments and commentID
-            model: Comment,
-            attributes: ['userId', 'body'],
-            include: [
-              {
-                // Gets username of user who made comment
-                model: User,
-                attributes: ['username'],
-              },
-            ],
+            model: User,
+            attributes: ['id', 'username'],
           },
         ],
       });
 
       const serializedBlogs = blogs.map((blog) => blog.get({ plain: true }));
-      console.log(serializedBlogs);
+      const serializedComments = comments.map((comment) =>
+        comment.get({ plain: true })
+      );
+
+      console.log(
+        JSON.stringify(serializedComments) +
+          'SCSCSCSCSCSCSCCSCSCSCSCSCSCSCSCCSCSCSC'
+      );
       res.status(200).render('homeId', {
         layout: 'home',
         user: authorizedAccess,
         username: req.session.username,
         serializedBlogs,
+        serializedComments,
       });
     }
   } catch (err) {

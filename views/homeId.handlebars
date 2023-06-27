@@ -50,7 +50,7 @@
       </p>
 
       {{!-- Comments --}}
-      {{#each blog.Comments as |comment|}}
+      {{#each serializedComments as |comment|}}
       <p class="p-4 blog-paragraph comment insert-comment">{{ comment.User.username }} - {{ comment.body }}</p>
       {{/each}}
 
