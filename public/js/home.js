@@ -2,8 +2,7 @@ $(() => {
   const $saveButton = $('#comment-save');
   const $closeButton = $('.comment-close');
   const $xButton = $('.xButton');
-  const $userId = $('');
-
+  
   // Makes the Leave Comment modal appear
   $('.btn-open-modal').click(function () {
     $('#myModal').modal('show');

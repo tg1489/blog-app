@@ -7,38 +7,43 @@ exports.home = async (req, res) => {
       res.render('guest');
     } else {
       const blogs = await Blog.findAll({
-        attributes: ['title', 'paragraph', 'date'],
-        include: [
-          // Sets username to Blog Title
-          { model: User, attributes: ['id', 'username'] },
-        ],
-      });
-
-      const comments = await Comment.findAll({
-        attributes: ['body', 'userId'],
+        attributes: ['id', 'title', 'paragraph', 'date'],
         include: [
           {
             model: User,
             attributes: ['id', 'username'],
           },
+          {
+            model: Comment,
+            attributes: ['id', 'body', 'blogId'],
+            include: {
+              model: User,
+              attributes: ['id', 'username'],
+            },
+          },
         ],
       });
 
-      const serializedBlogs = blogs.map((blog) => blog.get({ plain: true }));
-      const serializedComments = comments.map((comment) =>
-        comment.get({ plain: true })
-      );
+      const serializedBlogs = blogs.map((blog) => {
+        return {
+          id: blog.id,
+          title: blog.title,
+          paragraph: blog.paragraph,
+          date: blog.date,
+          user: blog.User.username,
+          comments: blog.Comments.map((comment) => ({
+            blogId: comment.blogId,
+            body: comment.body,
+            user: comment.User.username,
+          })),
+        };
+      });
 
-      console.log(
-        JSON.stringify(serializedComments) +
-          'SCSCSCSCSCSCSCCSCSCSCSCSCSCSCSCCSCSCSC'
-      );
       res.status(200).render('homeId', {
         layout: 'home',
         user: authorizedAccess,
         username: req.session.username,
         serializedBlogs,
-        serializedComments,
       });
     }
   } catch (err) {
@@ -199,10 +204,10 @@ exports.postHome = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     } else {
-      console.log(req.body.body + 'req.body.bodyBWBWBWBWBWBWBWBWBBWBWBWBWWB');
       const newComment = await Comment.create({
         body: req.body.body,
         userId: req.session.user_id,
+        blogId: req.session.user_id,
       });
       res.status(200).json({ success: true, comment: newComment });
     }
