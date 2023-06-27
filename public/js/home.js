@@ -13,7 +13,6 @@ $(() => {
   const handleComment = async () => {
     // New user comment stored
     const $comment = $('#comment').val().trim();
-    // const $username = $('.nav-link:first').text(); // Get the username from the navbar
 
     $.ajax({
       url: '/home',
