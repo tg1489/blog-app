@@ -60,20 +60,37 @@ exports.getGuest = async (req, res) => {
     // If user is not logged in, show all blogs on the guest page
     if (!authorizedAccess) {
       const blogs = await Blog.findAll({
-        attributes: ['title', 'paragraph', 'date', 'userId'],
-        include: {
-          model: User,
-          attributes: ['id', 'username'],
-        },
+        attributes: ['id', 'title', 'paragraph', 'date'],
+        include: [
+          {
+            model: User,
+            attributes: ['id', 'username'],
+          },
+          {
+            model: Comment,
+            attributes: ['id', 'body', 'blogId'],
+            include: {
+              model: User,
+              attributes: ['id', 'username'],
+            },
+          },
+        ],
       });
 
-      // Convert blogs to readable data
-      const serializedBlogs = blogs.map((blog) => blog.get({ plain: true }));
-
-      console.log(
-        console.log(JSON.stringify(serializedBlogs, null, 2)) +
-          'WMWMWMWMWMMWMWMWMWMMWMWMWMWMWMWMWMWMWMWMWM'
-      );
+      const serializedBlogs = blogs.map((blog) => {
+        return {
+          id: blog.id,
+          title: blog.title,
+          paragraph: blog.paragraph,
+          date: blog.date,
+          user: blog.User.username,
+          comments: blog.Comments.map((comment) => ({
+            blogId: comment.blogId,
+            body: comment.body,
+            user: comment.User.username,
+          })),
+        };
+      });
 
       res.status(200).render('guest', {
         layout: 'guest',
