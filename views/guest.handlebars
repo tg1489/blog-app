@@ -32,6 +32,7 @@
   {{!-- Row --}}
   <div class="row blog-center mt-4 mb-4">
     {{!-- Column --}}
+    {{!-- <p class="username">{{}} --}}
     {{#each serializedBlogs as |blog|}}
     <div class="col blog insert-new-comment">
       <p class="username">{{blog.User.username}} <br><br><span id="title-date">{{blog.title}} | {{blog.date}} </span></p>

@@ -45,9 +45,6 @@ exports.getGuest = async (req, res) => {
   try {
     // Find out if user is logged in
     const authorizedAccess = req.session.logged_in;
-    const id = await User.findAll({
-      attributes: ['id'],
-    });
 
     // If user is not logged in, show all blogs on the guest page
     if (!authorizedAccess) {
@@ -55,12 +52,17 @@ exports.getGuest = async (req, res) => {
         attributes: ['title', 'paragraph', 'date', 'userId'],
         include: {
           model: User,
-          attributes: ['username'],
+          attributes: ['id', 'username'],
         },
       });
 
       // Convert blogs to readable data
       const serializedBlogs = blogs.map((blog) => blog.get({ plain: true }));
+
+      console.log(
+        console.log(JSON.stringify(serializedBlogs, null, 2)) +
+          'WMWMWMWMWMMWMWMWMWMMWMWMWMWMWMWMWMWMWMWMWM'
+      );
 
       res.status(200).render('guest', {
         layout: 'guest',
@@ -213,11 +215,20 @@ exports.dashboard = async (req, res) => {
       res.redirect('/login');
     } else {
       const user = await User.findByPk(req.session.user_id);
+      const user2 = user.get({ plain: true });
+      const userId = user2.id;
+      console.log(
+        userId + 'userId-WMWMWMWMMWMWMWMWMMWMWMWMWMWMWMMWMWMWMWMWMWM'
+      );
+      console.log(
+        req.session.user_id +
+          'req.session-WMWMWMWMMWMWMWMWMMWMWMWMWMWMWMMWMWMWMWMWMWM'
+      );
 
       // Finds blogs for logged in user only
       const userBlogs = await Blog.findAll({
         attributes: ['id', 'title', 'paragraph', 'date'],
-        where: { id: user.id },
+        where: { userId: req.session.user_id },
       });
 
       const serializedBlogs = userBlogs.map((blog) =>
@@ -319,6 +330,7 @@ exports.postBlog = async (req, res) => {
     } else {
       // Create the blog entry and associate it with the user
       const blogData = await Blog.create({
+        userId: req.session.user_id,
         title: req.body.title,
         paragraph: req.body.paragraph,
         date: req.body.date,

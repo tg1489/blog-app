@@ -66,7 +66,6 @@ $(() => {
       type: 'PUT',
       url: `/dashboard`,
       data: {
-        id: $blogId,
         title: $title,
         paragraph: $paragraph,
         date: $date,
