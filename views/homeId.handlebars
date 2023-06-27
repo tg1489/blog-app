@@ -42,7 +42,7 @@
     
    {{!-- Column --}}
 {{#each serializedBlogs as |blog|}}
-  <div class="col blog insert-new-comment" data-="{{blog.id}}">
+  <div class="col blog insert-new-comment" name="blog-id" value="{{blog.id}}">
     <p>Blog.id 1st: {{blog.id}}</p>
     <p class="username">Dynamic Username: {{blog.user}} <br><br><span id="title-date">{{blog.title}} | {{blog.date}} </span></p>
     <p class="blog-paragraph append-comment">{{blog.paragraph}}</p>

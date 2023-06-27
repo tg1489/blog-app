@@ -207,8 +207,9 @@ exports.postHome = async (req, res) => {
       const newComment = await Comment.create({
         body: req.body.body,
         userId: req.session.user_id,
-        blogId: req.session.user_id,
+        blogId: req.body.blogId,
       });
+
       res.status(200).json({ success: true, comment: newComment });
     }
   } catch (err) {

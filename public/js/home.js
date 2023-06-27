@@ -2,7 +2,7 @@ $(() => {
   const $saveButton = $('#comment-save');
   const $closeButton = $('.comment-close');
   const $xButton = $('.xButton');
-  
+
   // Makes the Leave Comment modal appear
   $('.btn-open-modal').click(function () {
     $('#myModal').modal('show');
@@ -12,11 +12,14 @@ $(() => {
   const handleComment = async () => {
     // New user comment stored
     const $comment = $('#comment').val().trim();
+    const blogId = $('.insert-new-comment').attr('value');
+    console.log(blogId);
 
     $.ajax({
       url: '/home',
       method: 'POST',
       data: {
+        blogId: blogId,
         body: $comment,
       },
       success: function (response) {
