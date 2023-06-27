@@ -39,10 +39,11 @@
 <div class="container existing-blogs">
   {{!-- Row --}}
   <div class="row blog-center mt-4 mb-4">
+    
     {{!-- Column --}}
     {{#each serializedBlogs as |blog|}}
     <div class="col blog insert-new-comment">
-      <p class="username">Dynamic Username: {{ username }} <br><br><span id="title-date">{{blog.title}} | {{blog.date}} </span></p>
+      <p class="username">Dynamic Username: {{ blog.User.username }} <br><br><span id="title-date">{{blog.title}} | {{blog.date}} </span></p>
 
       <p class="blog-paragraph append-comment">
         {{ blog.paragraph }}

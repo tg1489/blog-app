@@ -192,14 +192,13 @@ exports.postHome = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
+    } else {
+      const newComment = await Comment.create({
+        body: req.body,
+        userId: req.session.user_id,
+      });
+      res.status(200).json({ success: true, comment: newComment });
     }
-
-    const newComment = await Comment.create({
-      body: req.body,
-      userId: req.session.user_id,
-      blogId: req.session.user_id,
-    });
-    res.status(200).json({ success: true, comment: newComment });
   } catch (err) {
     res.status(400).json({ success: false, error: err.message });
   }
