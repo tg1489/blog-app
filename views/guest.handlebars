@@ -1,6 +1,6 @@
 {{!-- Navbar --}}
 <nav class="navbar navbar-expand-lg">
-    <a id="title" class="navbar-brand" href="/home">Blog App</a>
+    <a id="title" class="navbar-brand" href="/">Blog App</a>
     <button class="navbar-toggler" 
             type="button" 
             data-bs-toggle="collapse" 
@@ -28,31 +28,24 @@
 </nav>
 
 
+
 {{!-- Existing Blogs --}}
 <div class="container existing-blogs">
   {{!-- Row --}}
   <div class="row blog-center mt-4 mb-4">
-    
-   {{!-- Column --}}
-{{#each serializedBlogs as |blog|}}
-<div class="col blog insert-new-comment" data-blog-id="{{blog.id}}">
-    <p>Blog.id 1st: {{blog.id}}</p>
-    <p class="username">Dynamic Username: {{blog.user}} <br><br><span id="title-date">{{blog.title}} | {{blog.date}} </span></p>
-    <p class="blog-paragraph append-comment">{{blog.paragraph}}</p>
 
-    {{!-- Comments --}}
-    {{#each (lookup blog 'comments') as |comment|}}
-      <p id="{{blog.id}}" class="p-4 blog-paragraph comment insert-comment">{{comment.user}} - {{comment.body}} Blog ID:{{comment.blogId}}</p>
-    {{/each}}
+  
+  {{!-- Blog --}}  
+  <div>
+    {{#each serializedBlogs as |blog|}}
+      <a href="/blog/{{blog.id}}" data-blog-id="{{blog.id}}">
+      <div class="blog insert-new-comment">
 
-    <div class="leave-comment btn-open-modal" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Leave Comment</div>
+      <p class="col username">{{blog.user}} <br><br><span id="title-date">{{blog.title}} | {{blog.date}} </span></p>
   </div>
-{{/each}}
-
-
-  </div>
+  {{/each}}
+  </div></a></div>
 </div>
-
 
 
 

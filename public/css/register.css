@@ -8,6 +8,25 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     font: inherit;
     vertical-align: baseline;
   }
+
+  span.blogComments {
+    color: #FFF;
+    margin-left: 10px;
+    
+  }
+
+  div.comments-border {
+    border: #FFF 1px solid;
+    height: 50vh;
+    width: 100vw;
+  }
+
+  #community-blogs{
+    text-align: center;
+    display: block;
+    color: #FFF;
+    font-size: 28px;
+}
   
   article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
     display: block;

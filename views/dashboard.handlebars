@@ -38,60 +38,97 @@
 <div class="container-fluid create-blog-container">
     <div id="remove-space" class="row create-blog-row d-flex justify-content-center">
 
-
+        {{!-- Dashboard Buttons --}}
         <a class="col-3 mt-4 mb-4 create-blog" href="/blog">
             <div class="create-blog-div">
                 Create New Blog
             </div>
         </a>
        
-    <div class="col-3 mr-3 mt-4 mb-4 create-blog blog-posts-button pointer">
-            Blog Posts
-                
-    </div>
+        <div class="col-3 mr-3 mt-4 mb-4 create-blog blog-posts-button pointer">
+                Blog Posts
+        </div>
 
-
-  
         <a class="col-3 mt-4 mb-4 create-blog" href="/SomethingElse"><div>
             Something Else
         </div></a>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    {{!-- Dashboard Edit/Delete Blog --}}
     <div class="row create-blog-row d-flex justify-content-center">
-        <div class="col-6">
-<p>{{serializedUser.username}} Blogs:</p>
+      <div class="col-6">
+        <p>Blogs:</p>
+
+        
             {{#each serializedBlogs as |blog|}}
             <ul class="col mb-1 blog-dropdown blog-border-style">
                    
-                    <li>
+                
+                {{!-- Options before you are able to edit --}}
 
-                        {{!-- Title --}}
-                        <a data-id="{{ blog.id }}" class="blog-dropdown-item d-flex justify-content-center" href="/home">{{ blog.title }}</a>
+                {{!-- Blog ID --}}
+                <li data-blog-id="{{blog.id}}">
+                    
 
-                        {{!-- Edit/Delete --}}
-                        <span class="d-flex justify-content-center">
-                              <span type="button" class="edit pointer mr-1">Edit Blog</span>
-                              {{!-- Hidden Edit div that looks like create blog --}}
-                              
+                    {{!-- Title --}}
+                    <a class="blog-dropdown-item d-flex justify-content-center" href="/home">{{ blog.title }}</a>
+
+                    {{!-- Edit/Delete --}}
+                    <span class="d-flex justify-content-center">
+                    <span id="edit-blog-btn" type="button" class="edit pointer mr-1">Edit Blog</span>
+
+                    {{!-- Delete Button --}}
+                    <span type="button" class="delete pointer">Delete Blog</span>
+                    </span>
+                </li>   
+                    
+
+
+
+{{!-- Form where you can make the edits --}}
 <div class="container edit-blog-container">
-    <form class="form-create-blog">
+    <form class="form-create-blog" data-blog-id="{{blog.id}}">
         <div class="row create-blog-row">
             <div class="col create-blog-div">
+                
+                
+                {{!-- Title --}}
                 <label for="title">Title:</label>
-                <input value="{{ blog.title }}" id="titleId" class="form-blog-title" type="text" name="title">
+                <input value="{{ blog.title }}" id="blog-title" class="form-blog-title" type="text" name="blog-title">
             </div>
+                {{!-- Date --}}
             <div class="col create-blog-div">
                 <label for="date">Date:</label>
-                <input value="{{ blog.date }}" id="dateId" class="form-blog-date" type="text" name="date">
+                <input value="{{ blog.date }}" id="blog-date" class="form-blog-date" type="text" name="blog-date">
             </div>
         </div>
+                {{!-- Paragraph --}}
         <div class="row create-blog-row">
             <div class="col create-blog-div">
                 <label for="paragraph">Message:</label>
-                <textarea id="paragraphId" class="form-blog-paragraph form-control" cols="30" rows="5" type="text" name="paragraph">
+                <textarea id="blog-body" class="form-blog-paragraph form-control" cols="30" rows="5" type="text" name="blog-body">
                     {{ blog.paragraph }}
                 </textarea>
             </div>
         </div>
+                {{!-- Edit Button --}}
         <div class="row create-blog-row">
             <div class="col create-blog-div">
                 <button id="submitId" class="form-blog-submit" type="submit" name="submit">Submit</button>
@@ -100,15 +137,9 @@
         </div>
     </form>
 </div>
-
-                              <span type="button" class="delete pointer">Delete Blog</span>
-                        </span>
-                      
-                    
-                    </li>
-
-                </ul>
-            
+                
+                      </li>
+                    </ul>
             {{/each}}
         </div>
     </div>

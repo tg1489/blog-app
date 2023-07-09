@@ -243,16 +243,11 @@ exports.dashboard = async (req, res) => {
       // User is not logged in, redirect to login page
       res.redirect('/login');
     } else {
-      const user = await User.findByPk(req.session.user_id);
-      const user2 = user.get({ plain: true });
-      const userId = user2.id;
-      console.log(
-        userId + 'userId-WMWMWMWMMWMWMWMWMMWMWMWMWMWMWMMWMWMWMWMWMWM'
-      );
-      console.log(
-        req.session.user_id +
-          'req.session-WMWMWMWMMWMWMWMWMMWMWMWMWMWMWMMWMWMWMWMWMWM'
-      );
+      // const blogData = await Blog.findByPk(req.session.user_id);
+      // let blog;
+      // if (blogData) {
+      //   blog = blogData.get({ plain: true });
+      // }
 
       // Finds blogs for logged in user only
       const userBlogs = await Blog.findAll({
@@ -263,12 +258,10 @@ exports.dashboard = async (req, res) => {
       const serializedBlogs = userBlogs.map((blog) =>
         blog.get({ plain: true })
       );
-      const serializedUser = user.get({ plain: true });
 
       // User is logged in, render the dashboard page
       res.status(200).render('dashboard', {
         layout: 'dash',
-        serializedUser,
         serializedBlogs,
         username: req.session.username,
       });
@@ -281,26 +274,27 @@ exports.dashboard = async (req, res) => {
 
 exports.putDashboard = async (req, res) => {
   try {
-    // Retrieve the blogId from the request parameters
+    // Extract the data from the request body
+    const { blogId, title, date, body } = req.body;
 
-    const { id, title, paragraph, date } = req.body;
+    // Find the corresponding blog entry by blogId
+    const blog = await Blog.findByPk(blogId);
 
-    console.log(id, 'blog id');
-    // Update the blog with the given blogId using the data from the request body
-    if (!id) {
-      return res.status(400).json({ message: 'missing blog id' });
+    // Check if the blog exists
+    if (!blog) {
+      return res.status(404).json({ message: 'Blog not found' });
     }
-    const updatedBlog = await Blog.update(
-      { title, paragraph, date },
-      { where: { id: id } }
-    );
-    if (updatedBlog[0] === 0) {
-      return res.status(404).json({ message: 'blog not found' });
-    }
+
+    // Update the blog entry with the new values
+    blog.title = title;
+    blog.date = date;
+    blog.paragraph = body;
+
+    // Save the updated blog entry to the database
+    await blog.save();
+
     // Send a response indicating successful update
-    res
-      .status(200)
-      .json({ message: 'Blog updated successfully', blog: updatedBlog });
+    res.status(200).json({ message: 'Blog updated successfully' });
   } catch (error) {
     // Handle any errors that occurred during the update process
     console.error('Error updating blog:', error);
@@ -345,6 +339,76 @@ exports.getBlog = async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
     console.error(err);
+  }
+};
+
+exports.getBlogId = async (req, res) => {
+  try {
+    const blog = await Blog.findOne({
+      attributes: ['id', 'title', 'paragraph', 'date'],
+      where: { id: req.params.id },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'username'],
+        },
+        {
+          model: Comment,
+          attributes: ['id', 'body', 'blogId'],
+          include: {
+            model: User,
+            attributes: ['id', 'username'],
+          },
+        },
+      ],
+    });
+
+    const serializedBlogs = {
+      id: blog.id,
+      title: blog.title,
+      paragraph: blog.paragraph,
+      date: blog.date,
+      user: blog.User.username,
+      comments: blog.Comments.map((comment) => ({
+        blogId: comment.blogId,
+        body: comment.body,
+        user: comment.User.username,
+      })),
+    };
+
+    res.status(200).render('blogId', {
+      layout: 'blogId',
+      username: req.session.username,
+      serializedBlogs,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+exports.postBlogId = async (req, res) => {
+  try {
+    const authorizedAccess = req.session.logged_in;
+
+    if (!authorizedAccess) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const user = await User.findByPk(req.session.user_id);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    } else {
+      const newComment = await Comment.create({
+        body: req.body.body,
+        userId: req.session.user_id,
+        blogId: req.body.blogId,
+      });
+
+      res.status(200).json({ success: true, comment: newComment });
+    }
+  } catch (err) {
+    res.status(500).json(err);
   }
 };
 

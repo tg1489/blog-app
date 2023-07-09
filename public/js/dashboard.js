@@ -17,70 +17,44 @@ $(() => {
     $editBlogContainer.hide(); // Hide the edit-blog-container for all blogs
 
     $editButton.on('click', function () {
-      const $blogId = $(this)
-        .closest('li')
-        .find('.blog-dropdown-item')
-        .data('id');
-      const $clickedBlogEditContainer = $(this)
-        .closest('li')
-        .find('.edit-blog-container');
+      // When you click on the EDIT button
+      const $clickedBlogEditContainer = $('#edit-blog-btn')[0];
 
-      if ($clickedBlogEditContainer.is(':visible')) {
-        $clickedBlogEditContainer.hide();
-      } else {
-        $editBlogContainer.hide(); // Hide the edit-blog-container for other blogs
-        $clickedBlogEditContainer.show();
-      }
+      console.log($clickedBlogEditContainer);
+      $editBlogContainer.toggle();
     });
   });
 
   // FORM EDIT
-  $(document).on('submit', '.form-create-blog', function (e) {
+  $(document).on('submit', '.form-create-blog', async function (e) {
     e.preventDefault();
-    const $blogId = $(this)
-      .closest('li')
-      .find('.blog-dropdown-item')
-      .data('id');
-    // .prev(".blog-dropdown-item")
-    // .data("id");
-    const $clickedBlogEditContainer = $(this)
-      .closest('li')
-      .find('.edit-blog-container');
 
-    console.log($blogId + 'BlogID should be here');
-    console.log($(this).closest('li').find('.blog-dropdown-item'));
+    const blogId = $(this).data('blog-id');
+    const title = document.querySelector('input[name="blog-title"]').value;
+    const date = document.querySelector('input[name="blog-date"]').value;
+    const body = document.querySelector('textarea[name="blog-body"]').value;
 
-    if ($clickedBlogEditContainer.is(':visible')) {
-      $clickedBlogEditContainer.hide();
-    } else {
-      $editBlogContainer.hide(); // Hide the edit-blog-container for other blogs
-      $clickedBlogEditContainer.show();
-    }
+    console.log(
+      `BlogID===${blogId} title===${title} date===${date} body===${body}`
+    );
 
-    const $title = $('#titleId').val().trim();
-    const $date = $('#dateId').val();
-    const $paragraph = $('#paragraphId').val();
-
-    // Send AJAX request to retrieve the blog data and populate the edit-blog-container
-    $.ajax({
-      type: 'PUT',
-      url: `/dashboard`,
-      data: {
-        title: $title,
-        paragraph: $paragraph,
-        date: $date,
-      },
-      success: function (response) {
-        $clickedBlogEditContainer.html(response);
-        console.log(`Front End Response: ${response}`);
-      },
-      error: function (error) {
-        console.error('Error retrieving blog data:', error);
+    await fetch(`/dashboard`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        blogId,
+        title,
+        date,
+        body,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
       },
     });
-  });
-  // END FORM EDIT
 
+    document.location.replace('/dashboard');
+  }); // END FORM EDIT
+
+  // DELETE FORM
   $deleteButton.on('click', function () {
     const blogId = $(this).closest('li').find('.blog-dropdown-item').data('id');
     const $blogEl = $(this).closest('li'); // Grabs the <li> item clicked
